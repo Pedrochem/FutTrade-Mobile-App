@@ -1,12 +1,27 @@
 package com.example.agoravai;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.util.Log;
 
+import androidx.annotation.RequiresApi;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Main {
 
+    private static final String MESSAGE_ID = "messages_pref";
     private static Main instance;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+
+    Context context;
 
     Time liverpool;
     Time manchesterCity;
@@ -23,13 +38,17 @@ public class Main {
     int money;
     LinkedList<Time> wallet;
 
-    public static Main getInstance(){
+    public static Main getInstance(Context c){
         if (instance == null)
-            instance = new Main();
+            instance = new Main(c);
         return instance;
     }
 
-    public Main(){
+    public Main(Context c){
+        context = c;
+        sharedPreferences = context.getSharedPreferences(MESSAGE_ID,context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
         liverpool = new Time("Liverpool", 80, 1, 82);
         manchesterCity = new Time("Manchester City", 70, 2,57);
         leicester = new Time("Leicester City", 60, 3,53);
@@ -40,26 +59,61 @@ public class Main {
         newcastle = new Time("Newcastle United", 10, 8,35 );
 
         Time[] times = new Time[]{liverpool,manchesterCity,leicester,chelsea,manchesterUntd,tottenham,arsenal,newcastle};
-        wallet = new LinkedList<>();
+
+
+
+
+        Gson gson = new Gson();
+        Type type = new TypeToken<LinkedList<Time>>(){}.getType();
+        String json = sharedPreferences.getString("Wallet","");
+
+        if (!json.equals(""))
+            wallet = gson.fromJson(json,type);
+        else
+            wallet = new LinkedList<>();
+
         tabela = new Tabela(times);
 
-        money = 100;
+//        editor.clear();
+//        editor.commit();
+
+        money = sharedPreferences.getInt("Money",100);
 
     }
 
-    public void buy(Time t){
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void buy(Time t, Market m){
 
-        if(money-t.getValue()<0)
+        if(money-t.getValue()<0 || wallet.contains(t))
             return; //ERRO
 
-        money-=t.getValue();
         wallet.add(t);
+        money-=t.getValue();
+
+        m.uptadeMoney(money);
+        uptadeSharedPreferences();
+        m.configButtons();
+
+
 
         //UPTADATE MONEY GLOBAL
         //UPTDATE BUTTON MARKET
         //UPDATE TXT MARKET
 
         return;
+    }
+
+
+
+    public void uptadeSharedPreferences(){
+        editor.putInt("Money",money);
+
+        Gson gson = new Gson();
+        String json = gson.toJson(wallet);
+        Log.d("Tag", " Wallet = "+json);
+        editor.putString("Wallet",json);
+        editor.commit();
+
     }
 
     public Time getLiverpool() {

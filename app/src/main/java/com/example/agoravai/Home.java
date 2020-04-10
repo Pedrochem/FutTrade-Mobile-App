@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.icu.text.NumberFormat;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -21,6 +22,7 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
     private TextView txtMoney;
 
     private Main main;
+    private Intent intentMarket;
 
 
 
@@ -33,9 +35,12 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        main = main.getInstance();
 
+        main = main.getInstance(this);
 
+        intentMarket = new Intent(Home.this,Market.class);
+
+        Log.d("vsf", "onCreate: CRIOU_HOME");
         txtMoney = findViewById(R.id.txt_money_home);
         txtMoney.setText(NumberFormat.getCurrencyInstance().format(main.money));
 
@@ -65,7 +70,7 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.b_market:
-                startActivity(new Intent(Home.this,Market.class));
+                startActivity(intentMarket);
                 overridePendingTransition(0,0);
                 break;
             case R.id.b_my_assets:

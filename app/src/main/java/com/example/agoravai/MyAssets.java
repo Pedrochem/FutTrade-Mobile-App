@@ -24,7 +24,7 @@ public class MyAssets extends AppCompatActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_assets);
 
-        main = main.getInstance();
+        main = main.getInstance(this);
 
         txtMoney = findViewById(R.id.txt_money_my_assets);
         txtMoney.setText(NumberFormat.getCurrencyInstance().format(main.money));
