@@ -110,6 +110,7 @@ public class Market extends AppCompatActivity implements View.OnClickListener {
             if (main.wallet.contains(t)){
                 buttons[i].setBackgroundColor(Color.RED);
                 buttons[i].setEnabled(false);
+                buttons[i].setTextColor(Color.parseColor("#3C3939"));
             }
             i++;
         }
@@ -131,27 +132,27 @@ public class Market extends AppCompatActivity implements View.OnClickListener {
             case R.id.buy_liverpoool:
                 main.buy(main.liverpool,this);
                 break;
-//            case R.id.buy_manchesterCity:
-//                main.buy(main.manchesterCity);
-//                break;
-//            case R.id.buy_leicester_city:
-//                main.buy(main.leicester);
-//                break;
-//            case R.id.buy_chelsea:
-//                main.buy(main.chelsea);
-//                break;
-//            case R.id.buy_manchesterUntd:
-//                main.buy(main.manchesterUntd);
-//                break;
-//            case R.id.buy_tottenhamHotspur:
-//                main.buy(main.tottenham);
-//                break;
-//            case R.id.buy_arsenal:
-//                main.buy(main.arsenal);
-//                break;
-//            case R.id.buy_newcastleUnited:
-//                main.buy(main.newcastle);
-//                break;
+            case R.id.buy_manchesterCity:
+                main.buy(main.manchesterCity,this);
+                break;
+            case R.id.buy_leicester_city:
+                main.buy(main.leicester,this);
+                break;
+            case R.id.buy_chelsea:
+                main.buy(main.chelsea,this);
+                break;
+            case R.id.buy_manchesterUntd:
+                main.buy(main.manchesterUntd,this);
+                break;
+            case R.id.buy_tottenhamHotspur:
+                main.buy(main.tottenham,this);
+                break;
+            case R.id.buy_arsenal:
+                main.buy(main.arsenal,this);
+                break;
+            case R.id.buy_newcastleUnited:
+                main.buy(main.newcastle,this);
+                break;
 
         }
     }
