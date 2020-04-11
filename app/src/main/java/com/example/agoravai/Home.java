@@ -40,7 +40,6 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
 
         intentMarket = new Intent(Home.this,Market.class);
 
-        Log.d("vsf", "onCreate: CRIOU_HOME");
         txtMoney = findViewById(R.id.txt_money_home);
         txtMoney.setText(NumberFormat.getCurrencyInstance().format(main.money));
 

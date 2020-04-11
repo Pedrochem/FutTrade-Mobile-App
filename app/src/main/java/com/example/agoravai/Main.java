@@ -34,6 +34,7 @@ public class Main {
 
     Tabela tabela;
     Match match;
+    Time[] times;
 
     int money;
     LinkedList<Time> wallet;
@@ -58,7 +59,7 @@ public class Main {
         arsenal = new Time("Arsenal", 20, 7, 40);
         newcastle = new Time("Newcastle United", 10, 8,35 );
 
-        Time[] times = new Time[]{liverpool,manchesterCity,leicester,chelsea,manchesterUntd,tottenham,arsenal,newcastle};
+        times = new Time[]{liverpool,manchesterCity,leicester,chelsea,manchesterUntd,tottenham,arsenal,newcastle};
 
 
 
@@ -90,17 +91,9 @@ public class Main {
         wallet.add(t);
         money-=t.getValue();
 
-        m.uptadeMoney(money);
+        m.updateMoney(money);
         uptadeSharedPreferences();
         m.configButtons();
-
-
-
-        //UPTADATE MONEY GLOBAL
-        //UPTDATE BUTTON MARKET
-        //UPDATE TXT MARKET
-
-        return;
     }
 
 
