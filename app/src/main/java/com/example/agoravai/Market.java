@@ -8,13 +8,12 @@ import android.graphics.Color;
 import android.icu.text.NumberFormat;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.CalendarContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.LinkedList;
+
 
 public class Market extends AppCompatActivity implements View.OnClickListener {
     private Main main;
@@ -75,8 +74,8 @@ public class Market extends AppCompatActivity implements View.OnClickListener {
 
         for (int i = 0; i < main.times.length; i++) {
 
-            for (Time t : main.wallet) {
-                if (t.getName().equals(main.times[i].getName())) {
+            for (String t : main.wallet) {
+                if (t.equals(main.times[i].getName())) {
                     buttons[i].setBackgroundColor(Color.RED);
                     buttons[i].setEnabled(false);
                     buttons[i].setTextColor(Color.parseColor("#3C3939"));

@@ -4,15 +4,18 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.icu.text.NumberFormat;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 public class MyAssets extends AppCompatActivity implements View.OnClickListener {
     private Main main;
+    private NumberFormat nf;
 
     private Button b_Market;
     private Button b_Home;
@@ -36,6 +39,8 @@ public class MyAssets extends AppCompatActivity implements View.OnClickListener 
     private Button sell_Arsenal;
     private Button sell_NewcastleUnited;
 
+    private Button[] buttons;
+
     private TextView up_liverpool;
     private TextView up_manchesterCity;
     private TextView up_leicesterCity;
@@ -54,9 +59,12 @@ public class MyAssets extends AppCompatActivity implements View.OnClickListener 
         setContentView(R.layout.activity_my_assets);
 
         main = main.getInstance(this);
+        nf = NumberFormat.getCurrencyInstance();
 
 
         findIds();
+        buttons = new Button[]{sell_Liverpool,sell_ManchesterCity,sell_LeicesterCity,sell_Chelsea,sell_ManchesterUnited,sell_TottenhamHotspur,sell_Arsenal,sell_NewcastleUnited};
+        configButtons();
         txtMoney.setText(NumberFormat.getCurrencyInstance().format(main.money));
 
 
@@ -65,6 +73,9 @@ public class MyAssets extends AppCompatActivity implements View.OnClickListener 
     }
 
 
+
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -76,6 +87,31 @@ public class MyAssets extends AppCompatActivity implements View.OnClickListener 
                 startActivity(new Intent(MyAssets.this,Home.class));
                 overridePendingTransition(0,0);
                 break;
+            case R.id.sell_liverpoool:
+                main.sell(main.liverpool,this);
+                break;
+            case R.id.sell_manchesterCity:
+                main.sell(main.manchesterCity,this);
+                break;
+            case R.id.sell_LeicesterCity:
+                main.sell(main.leicester,this);
+                break;
+            case R.id.sell_manchesterUnited:
+                main.sell(main.manchesterUntd,this);
+                break;
+            case R.id.sell_tottenhamHotspur:
+                main.sell(main.tottenham,this);
+                break;
+            case R.id.sell_chelsea:
+                main.sell(main.chelsea,this);
+                break;
+            case R.id.sell_arsenal:
+                main.sell(main.arsenal,this);
+                break;
+            case R.id.sell_newcastleUnited:
+                main.sell(main.newcastle,this);
+                break;
+
         }
     }
 
@@ -111,4 +147,31 @@ public class MyAssets extends AppCompatActivity implements View.OnClickListener 
         up_arsenal = findViewById(R.id.up_arsenal);
         up_newcastleUnited = findViewById(R.id.up_newcastleUnited);
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void updateMoney(int x){
+        txtMoney.setText(nf.format(x));
+    }
+
+    public void configButtons() {
+
+        boolean achou = false;
+
+        for (int i = 0; i < main.times.length; i++) {
+            achou=false;
+            for (String t : main.wallet) {
+                if (t.equals(main.times[i].getName()))
+                    achou=true;
+            }
+            if (!achou){
+                buttons[i].setBackgroundColor(Color.DKGRAY);
+                buttons[i].setEnabled(false);
+            }
+
+
+        }
+    }
+
+
+
 }

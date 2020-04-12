@@ -11,8 +11,10 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 public class Main {
 
@@ -37,7 +39,9 @@ public class Main {
     Time[] times;
 
     int money;
-    LinkedList<Time> wallet;
+    boolean keeper = true;
+
+    Set<String> wallet;
 
     public static Main getInstance(Context c){
         if (instance == null)
@@ -61,34 +65,34 @@ public class Main {
 
         times = new Time[]{liverpool,manchesterCity,leicester,chelsea,manchesterUntd,tottenham,arsenal,newcastle};
 
+//        if (keeper){
+//            editor.clear();
+//            editor.commit();
+//            keeper = false;
+//        }
+
+        wallet = sharedPreferences.getStringSet("Wallet",new HashSet<String>());
+        money = sharedPreferences.getInt("Money",100);
 
 
 
-        Gson gson = new Gson();
-        Type type = new TypeToken<LinkedList<Time>>(){}.getType();
-        String json = sharedPreferences.getString("Wallet","");
-
-        if (!json.equals(""))
-            wallet = gson.fromJson(json,type);
-        else
-            wallet = new LinkedList<>();
 
         tabela = new Tabela(times);
 
-//        editor.clear();
-//        editor.commit();
 
-        money = sharedPreferences.getInt("Money",100);
+
+
+
 
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void buy(Time t, Market m){
 
-        if(money-t.getValue()<0 || wallet.contains(t))
+        if(money-t.getValue()<0 || wallet.contains(t)) // revisar esse wallet ai
             return; //ERRO
 
-        wallet.add(t);
+        wallet.add(t.getName());
         money-=t.getValue();
 
         m.updateMoney(money);
@@ -98,16 +102,33 @@ public class Main {
 
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void sell(Time t, MyAssets my){
+        for (String time : wallet){
+             if (time.equals(t.getName())){
+                 wallet.remove(t.getName());
+                 money+=t.getValue();
+                 my.updateMoney(money);
+                 uptadeSharedPreferences();
+                 my.configButtons();
+                 return;
+             }
+        }
+
+    }
+
+
+
+
     public void uptadeSharedPreferences(){
         editor.putInt("Money",money);
+        editor.putStringSet("Wallet",wallet);
+        Log.d("Wallet", "Wallet: "+wallet.toString());
 
-        Gson gson = new Gson();
-        String json = gson.toJson(wallet);
-        Log.d("Tag", " Wallet = "+json);
-        editor.putString("Wallet",json);
         editor.commit();
 
     }
+
 
     public Time getLiverpool() {
         return liverpool;

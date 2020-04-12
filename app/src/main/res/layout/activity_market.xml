@@ -87,7 +87,7 @@
             </LinearLayout>
 
             <View
-                android:id="@+id/view"
+                android:id="@+id/view_linhaCima"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#000000" />
@@ -145,7 +145,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="#4CAF50"
-                            android:enabled="false"
+                            android:enabled="true"
                             android:onClick="onClick"
                             android:text="Buy"
                             android:textColor="#000000" />
@@ -156,7 +156,7 @@
             </LinearLayout>
 
             <View
-                android:id="@+id/view"
+                android:id="@+id/view_linhaCima"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#000000" />
@@ -225,7 +225,7 @@
             </LinearLayout>
 
             <View
-                android:id="@+id/view"
+                android:id="@+id/view_linhaCima"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#000000" />
@@ -292,7 +292,7 @@
             </LinearLayout>
 
             <View
-                android:id="@+id/view"
+                android:id="@+id/view_linhaCima"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#000000" />
@@ -360,7 +360,7 @@
             </LinearLayout>
 
             <View
-                android:id="@+id/view"
+                android:id="@+id/view_linhaCima"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#000000" />
@@ -428,7 +428,7 @@
             </LinearLayout>
 
             <View
-                android:id="@+id/view"
+                android:id="@+id/view_linhaCima"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#000000" />
@@ -496,7 +496,7 @@
             </LinearLayout>
 
             <View
-                android:id="@+id/view"
+                android:id="@+id/view_linhaCima"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#000000" />
@@ -564,7 +564,7 @@
             </LinearLayout>
 
             <View
-                android:id="@+id/view"
+                android:id="@+id/view_linhaCima"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#000000" />
@@ -572,7 +572,7 @@
     </ScrollView>
 
     <View
-        android:id="@+id/view"
+        android:id="@+id/view_linhaCima"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#000000"
