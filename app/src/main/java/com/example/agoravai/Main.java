@@ -2,6 +2,7 @@ package com.example.agoravai;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.util.Log;
 
@@ -10,9 +11,16 @@ import androidx.annotation.RequiresApi;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.jsoup.Jsoup;
+
+import org.jsoup.nodes.Document;
+
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -22,8 +30,11 @@ public class Main {
     private static Main instance;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+    int lastMatchId;
 
     Context context;
+
+
 
     Time liverpool;
     Time manchesterCity;
@@ -35,7 +46,7 @@ public class Main {
     Time newcastle;
 
     Tabela tabela;
-    Match match;
+    List<Match> matches;
     Time[] times;
 
     int money;
@@ -48,11 +59,16 @@ public class Main {
             instance = new Main(c);
         return instance;
     }
+    public static Main getInstance(){
+        return instance;
+    }
 
     public Main(Context c){
         context = c;
         sharedPreferences = context.getSharedPreferences(MESSAGE_ID,context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
+        new doit().execute();
+
 
         liverpool = new Time("Liverpool", 80, 1, 82);
         manchesterCity = new Time("Manchester City", 70, 2,57);
@@ -73,14 +89,9 @@ public class Main {
 
         wallet = sharedPreferences.getStringSet("Wallet",new HashSet<String>());
         money = sharedPreferences.getInt("Money",100);
-
-
-
+        lastMatchId = sharedPreferences.getInt("LastMatchId",0);
 
         tabela = new Tabela(times);
-
-
-
 
 
 
@@ -123,48 +134,48 @@ public class Main {
     public void uptadeSharedPreferences(){
         editor.putInt("Money",money);
         editor.putStringSet("Wallet",wallet);
+        editor.putInt("LastMatchId",lastMatchId);
+
         Log.d("Wallet", "Wallet: "+wallet.toString());
 
         editor.commit();
-
     }
 
 
-    public Time getLiverpool() {
-        return liverpool;
+
+    public class doit extends AsyncTask<Void,Void,Void>{
+        Gson gson = new Gson();
+        String json1;
+        Type type = new TypeToken<List<Match>>() {}.getType();
+
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                Document doc1 = Jsoup.connect("http://dontpad.com/ordepncl/mobile").get();
+                json1 = doc1.body().text() ;
+                json1 = json1.trim().substring(41);
+
+                Log.d("Jsoup", "DeuBom:"+json1);
+
+                matches = gson.fromJson(json1,type);
+
+                if (matches.get(0).getMatchId() != lastMatchId){
+                    Log.d("Matches", "We need to update!");
+                    lastMatchId = matches.get(0).getMatchId();
+
+                    for (Match m:matches)
+                        m.process();
+                }
+                else {
+                    Log.d("Matches", "We didn't need to update!");
+                }
+
+            } catch (IOException e) {
+                Log.d("Jsoup", "Deu ruim");
+                e.printStackTrace();
+            }
+            return null;
+        }
     }
-
-    public Time getManchesterCity() {
-        return manchesterCity;
-    }
-
-    public Time getLeicester() {
-        return leicester;
-    }
-
-    public Time getChelsea() {
-        return chelsea;
-    }
-
-    public Time getManchesterUntd() {
-        return manchesterUntd;
-    }
-
-    public Time getTottenham() {
-        return tottenham;
-    }
-
-    public Time getArsenal() {
-        return arsenal;
-    }
-
-    public Time getNewcastle() {
-        return newcastle;
-    }
-
-    public Tabela getTabela() {
-        return tabela;
-    }
-
-
 }

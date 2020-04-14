@@ -1,5 +1,7 @@
 package com.example.agoravai;
 
+import android.util.Log;
+
 public class Time {
     private String name;
     private int value;
@@ -36,5 +38,21 @@ public class Time {
 
     public void setPos(int pos) {
         this.pos = pos;
+    }
+
+    public void uptadeVitoria(int posT1, int posT2) {
+        Log.d("Matches" , "Checking: "+ (pos==posT1));
+        //TODO
+        Log.d("Matches", "uptadeVitoria: "+name);
+    }
+
+    public void uptadeDerrota(int pos, int pos1) {
+        //TODO
+        Log.d("Matches", "uptadeDerrota: "+name);
+    }
+
+    public void uptadeEmpate(int pos, int pos1) {
+        //TODO
+        Log.d("Matches", "uptadeDerrota: "+name);
     }
 }
