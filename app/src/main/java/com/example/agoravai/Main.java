@@ -67,7 +67,6 @@ public class Main {
         context = c;
         sharedPreferences = context.getSharedPreferences(MESSAGE_ID,context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        new doit().execute();
 
 
         liverpool = new Time("Liverpool", 80, 1, 82);
@@ -95,6 +94,10 @@ public class Main {
 
 
 
+    }
+
+    public void connect() {
+        new doit().execute();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

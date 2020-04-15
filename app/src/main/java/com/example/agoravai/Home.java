@@ -19,6 +19,7 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
     private Button b_My_Assets;
     private Button b_Home;
 
+
     private TextView txtMoney;
 
     private Main main;
@@ -80,6 +81,8 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
                 startActivity(new Intent(Home.this,Ryan.class));
                 overridePendingTransition(0,0);
                 break;
+            case R.id.b_update:
+                main.connect();
         }
     }
 }

@@ -41,9 +41,14 @@ public class Time {
     }
 
     public void uptadeVitoria(int posT1, int posT2) {
-        Log.d("Matches" , "Checking: "+ (pos==posT1));
-        //TODO
-        Log.d("Matches", "uptadeVitoria: "+name);
+        Log.d("Matches", "PosT1: "+posT1+" | PosT2: "+posT2);
+        Log.d("Matches", "uptadeVitoria: "+name+ "| Value: "+value);
+        if (posT1>posT2)
+            value+=(((posT1-posT2)+3)/10.0)*value;
+        else
+            value+=(((posT1-posT2)+8)/20.0)*value;
+
+        Log.d("Matches", "uptadeVitoria: "+name+"| Value: "+value);
     }
 
     public void uptadeDerrota(int pos, int pos1) {
