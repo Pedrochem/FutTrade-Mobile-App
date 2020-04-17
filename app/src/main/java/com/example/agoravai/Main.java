@@ -1,6 +1,7 @@
 package com.example.agoravai;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -113,7 +114,9 @@ public class Main {
     }
 
     public void connect() {
-        new doit().execute();
+        Doit doit = new Doit();
+        doit.execute();
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -196,7 +199,7 @@ public class Main {
     }
 
 
-    public class doit extends AsyncTask<Void,Void,Void>{
+    public class Doit extends AsyncTask<Void,Void,Void>{
         Gson gson = new Gson();
         String json1;
         Type type = new TypeToken<List<Match>>() {}.getType();
