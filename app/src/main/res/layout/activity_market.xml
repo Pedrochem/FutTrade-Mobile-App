@@ -40,12 +40,12 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/txt_Liverpool"
+                        android:id="@+id/txt_0"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_horizontal|center_vertical"
-                        android:text="Liverpool" />
+                        android:text="txt0" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -54,7 +54,7 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/textView2"
+                            android:id="@+id/textView20"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -62,16 +62,16 @@
                             android:text="Price: " />
 
                         <TextView
-                            android:id="@+id/txt_price_liverpool"
+                            android:id="@+id/txt_price_0"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="100" />
+                            android:text="" />
 
 
                         <Button
-                            android:id="@+id/buy_liverpoool"
+                            android:id="@+id/buy_0"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -110,12 +110,12 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView"
+                        android:id="@+id/txt_1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_horizontal|center_vertical"
-                        android:text="Manchester City" />
+                        android:text="txt1" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -132,15 +132,15 @@
                             android:text="Price: " />
 
                         <TextView
-                            android:id="@+id/txt_price_manchesterCity"
+                            android:id="@+id/txt_price_1"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="100" />
+                            android:text="" />
 
                         <Button
-                            android:id="@+id/buy_manchesterCity"
+                            android:id="@+id/buy_1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -179,12 +179,12 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView"
+                        android:id="@+id/txt_2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_horizontal|center_vertical"
-                        android:text="Leicester City" />
+                        android:text="txt2" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -201,16 +201,16 @@
                             android:text="Price: " />
 
                         <TextView
-                            android:id="@+id/txt_price_leicesterCity"
+                            android:id="@+id/txt_price_2"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="100" />
+                            android:text="" />
 
 
                         <Button
-                            android:id="@+id/buy_leicester_city"
+                            android:id="@+id/buy_2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -248,12 +248,12 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView"
+                        android:id="@+id/txt_3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_horizontal|center_vertical"
-                        android:text="Chelsea" />
+                        android:text="Txt3" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -270,15 +270,15 @@
                             android:text="Price: " />
 
                         <TextView
-                            android:id="@+id/txt_price_chelsea"
+                            android:id="@+id/txt_price_3"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="100" />
+                            android:text="" />
 
                         <Button
-                            android:id="@+id/buy_chelsea"
+                            android:id="@+id/buy_3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -315,12 +315,12 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView"
+                        android:id="@+id/txt_4"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_horizontal|center_vertical"
-                        android:text="Manchester United" />
+                        android:text="Txt4" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -337,15 +337,15 @@
                             android:text="Price: " />
 
                         <TextView
-                            android:id="@+id/txt_price_manchesterUnited"
+                            android:id="@+id/txt_price_4"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="100" />
+                            android:text="" />
 
                         <Button
-                            android:id="@+id/buy_manchesterUntd"
+                            android:id="@+id/buy_4"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -383,12 +383,12 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView"
+                        android:id="@+id/txt_5"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_horizontal|center_vertical"
-                        android:text="Tottenham Hotspur" />
+                        android:text="Txt5" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -405,16 +405,16 @@
                             android:text="Price: " />
 
                         <TextView
-                            android:id="@+id/txt_price_tottenhamHotspur"
+                            android:id="@+id/txt_price_5"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="100" />
+                            android:text="" />
 
 
                         <Button
-                            android:id="@+id/buy_tottenhamHotspur"
+                            android:id="@+id/buy_5"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -451,12 +451,12 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView"
+                        android:id="@+id/txt_6"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_horizontal|center_vertical"
-                        android:text="Arsenal" />
+                        android:text="Tx6" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -473,16 +473,16 @@
                             android:text="Price: " />
 
                         <TextView
-                            android:id="@+id/txt_price_arsenal"
+                            android:id="@+id/txt_price_6"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="100" />
+                            android:text="" />
 
 
                         <Button
-                            android:id="@+id/buy_arsenal"
+                            android:id="@+id/buy_6"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -519,12 +519,12 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView"
+                        android:id="@+id/txt_7"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_horizontal|center_vertical"
-                        android:text="Newcastle United" />
+                        android:text="Txt7" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -541,16 +541,16 @@
                             android:text="Price: " />
 
                         <TextView
-                            android:id="@+id/txt_price_newcastleUnited"
+                            android:id="@+id/txt_price_7"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="100" />
+                            android:text="" />
 
 
                         <Button
-                            android:id="@+id/buy_newcastleUnited"
+                            android:id="@+id/buy_7"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"

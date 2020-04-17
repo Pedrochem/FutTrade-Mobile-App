@@ -21,34 +21,36 @@ public class MyAssets extends AppCompatActivity implements View.OnClickListener 
     private Button b_Home;
     private TextView txtMoney;
 
-    private TextView priceLiverpool;
-    private TextView priceManchesterCity;
-    private TextView priceLeicesterCity;
-    private TextView priceChelsea;
-    private TextView priceManchesterUnited;
-    private TextView priceTottenhamHotspur;
-    private TextView priceArsenal;
-    private TextView priceNewcastleUnited;
+    private TextView txt0;
+    private TextView txt1;
+    private TextView txt2;
+    private TextView txt3;
+    private TextView txt4;
+    private TextView txt5;
+    private TextView txt6;
+    private TextView txt7;
 
-    private Button sell_Liverpool;
-    private Button sell_ManchesterCity;
-    private Button sell_LeicesterCity;
-    private Button sell_Chelsea;
-    private Button sell_ManchesterUnited;
-    private Button sell_TottenhamHotspur;
-    private Button sell_Arsenal;
-    private Button sell_NewcastleUnited;
+    private TextView price0;
+    private TextView price1;
+    private TextView price2;
+    private TextView price3;
+    private TextView price4;
+    private TextView price5;
+    private TextView price6;
+    private TextView price7;
+
+    private Button sell0;
+    private Button sell1;
+    private Button sell2;
+    private Button sell3;
+    private Button sell4;
+    private Button sell5;
+    private Button sell6;
+    private Button sell7;
 
     private Button[] buttons;
-
-    private TextView up_liverpool;
-    private TextView up_manchesterCity;
-    private TextView up_leicesterCity;
-    private TextView up_chelsea;
-    private TextView up_manchesterUnited;
-    private TextView up_tottenhamHotspur;
-    private TextView up_arsenal;
-    private TextView up_newcastleUnited;
+    private TextView[] txts;
+    private TextView[] prices;
 
 
 
@@ -57,15 +59,11 @@ public class MyAssets extends AppCompatActivity implements View.OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_assets);
-
         main = main.getInstance(this);
         nf = NumberFormat.getCurrencyInstance();
 
-
         findIds();
-        buttons = new Button[]{sell_Liverpool,sell_ManchesterCity,sell_LeicesterCity,sell_Chelsea,sell_ManchesterUnited,sell_TottenhamHotspur,sell_Arsenal,sell_NewcastleUnited};
         configButtons();
-        txtMoney.setText(NumberFormat.getCurrencyInstance().format(main.money));
 
 
         b_Market.setOnClickListener(this);
@@ -87,66 +85,59 @@ public class MyAssets extends AppCompatActivity implements View.OnClickListener 
                 startActivity(new Intent(MyAssets.this,Home.class));
                 overridePendingTransition(0,0);
                 break;
-            case R.id.sell_liverpoool:
-                main.sell(main.liverpool,this);
+            default:
+                main.sell(v.getTag().toString(),this);
                 break;
-            case R.id.sell_manchesterCity:
-                main.sell(main.manchesterCity,this);
-                break;
-            case R.id.sell_LeicesterCity:
-                main.sell(main.leicester,this);
-                break;
-            case R.id.sell_manchesterUnited:
-                main.sell(main.manchesterUntd,this);
-                break;
-            case R.id.sell_tottenhamHotspur:
-                main.sell(main.tottenham,this);
-                break;
-            case R.id.sell_chelsea:
-                main.sell(main.chelsea,this);
-                break;
-            case R.id.sell_arsenal:
-                main.sell(main.arsenal,this);
-                break;
-            case R.id.sell_newcastleUnited:
-                main.sell(main.newcastle,this);
-                break;
-
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void findIds(){
-        b_Market = findViewById(R.id.b_market);
-        b_Home = findViewById(R.id.b_home);
         txtMoney = findViewById(R.id.txt_money_my_assets);
 
-        priceLiverpool = findViewById(R.id.txt_price_liverpool);
-        priceManchesterCity = findViewById(R.id.txt_price_manchesterCity);
-        priceLeicesterCity = findViewById(R.id.txt_price_leicesterCity);
-        priceChelsea = findViewById(R.id.txt_price_chelsea);
-        priceManchesterUnited = findViewById(R.id.txt_price_manchesterUnited);
-        priceTottenhamHotspur = findViewById(R.id.txt_price_tottenhamHotspur);
-        priceArsenal = findViewById(R.id.txt_price_arsenal);
-        priceNewcastleUnited = findViewById(R.id.txt_price_newcastleUnited);
+        b_Home = findViewById(R.id.b_home);
+        b_Market = findViewById(R.id.b_market);
 
-        sell_Liverpool = findViewById(R.id.sell_liverpoool);
-        sell_ManchesterCity = findViewById(R.id.sell_manchesterCity);
-        sell_LeicesterCity = findViewById(R.id.sell_LeicesterCity);
-        sell_Chelsea = findViewById(R.id.sell_chelsea);
-        sell_ManchesterUnited = findViewById(R.id.sell_manchesterUnited);
-        sell_TottenhamHotspur = findViewById(R.id.sell_tottenhamHotspur);
-        sell_Arsenal = findViewById(R.id.sell_arsenal);
-        sell_NewcastleUnited = findViewById(R.id.sell_newcastleUnited);
+        txt0 = findViewById(R.id.my_txt_0);
+        txt1 = findViewById(R.id.my_txt_1);
+        txt2 = findViewById(R.id.my_txt_2);
+        txt3 = findViewById(R.id.my_txt_3);
+        txt4 = findViewById(R.id.my_txt_4);
+        txt5 = findViewById(R.id.my_txt_5);
+        txt6 = findViewById(R.id.my_txt_6);
+        txt7 = findViewById(R.id.my_txt_7);
 
-        up_liverpool = findViewById(R.id.up_liverpool);
-        up_manchesterCity = findViewById(R.id.up_manchesterCity);
-        up_leicesterCity = findViewById(R.id.up_leicesterCity);
-        up_chelsea = findViewById(R.id.up_chelsea);
-        up_manchesterUnited = findViewById(R.id.up_manchesterUnited);
-        up_tottenhamHotspur = findViewById(R.id.up_tottenhamHotspur);
-        up_arsenal = findViewById(R.id.up_arsenal);
-        up_newcastleUnited = findViewById(R.id.up_newcastleUnited);
+        price0 = findViewById(R.id.my_txt_price_0);
+        price1 = findViewById(R.id.my_txt_price_1);
+        price2 = findViewById(R.id.my_txt_price_2);
+        price3 = findViewById(R.id.my_txt_price_3);
+        price4 = findViewById(R.id.my_txt_price_4);
+        price5 = findViewById(R.id.my_txt_price_5);
+        price6 = findViewById(R.id.my_txt_price_6);
+        price7 = findViewById(R.id.my_txt_price_7);
+
+        sell0 = findViewById(R.id.sell_0);
+        sell1 = findViewById(R.id.sell_1);
+        sell2 = findViewById(R.id.sell_2);
+        sell3 = findViewById(R.id.sell_3);
+        sell4 = findViewById(R.id.sell_4);
+        sell5 = findViewById(R.id.sell_5);
+        sell6 = findViewById(R.id.sell_6);
+        sell7 = findViewById(R.id.sell_7);
+
+        buttons = new Button[]{sell0, sell1, sell2, sell3, sell4, sell5, sell6, sell7};
+        txts = new TextView[]{txt0,txt1,txt2,txt3,txt4,txt5,txt6,txt7};
+        prices = new TextView[]{price0,price1,price2,price3,price4,price5,price6,price7};
+
+        for(int i=0;i<buttons.length;i++) {
+            txts[i].setText(main.times[i].getName());
+            buttons[i].setTag(main.times[i].getName());
+            prices[i].setText(nf.format(main.times[i].getValue()));
+        }
+        txtMoney.setText(nf.format(main.money));
     }
+
+
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void updateMoney(int x){
@@ -155,23 +146,14 @@ public class MyAssets extends AppCompatActivity implements View.OnClickListener 
 
     public void configButtons() {
 
-        boolean achou = false;
 
-        for (int i = 0; i < main.times.length; i++) {
-            achou=false;
-            for (String t : main.wallet) {
-                if (t.equals(main.times[i].getName()))
-                    achou=true;
-            }
-            if (!achou){
+        for (int i = 0; i < buttons.length; i++) {
+
+            if (!main.wallet.contains(buttons[i].getTag())){
                 buttons[i].setBackgroundColor(Color.DKGRAY);
                 buttons[i].setEnabled(false);
             }
-
-
         }
     }
-
-
 
 }

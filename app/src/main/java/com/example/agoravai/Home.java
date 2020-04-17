@@ -12,13 +12,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.LinkedList;
+
 
 public class Home extends AppCompatActivity implements View.OnClickListener {
+
+    private LinkedList<Integer> moneys;
+    private int moneyAtual;
 
     private Button b_Market;
     private Button b_My_Assets;
     private Button b_Home;
-
 
     private TextView txtMoney;
 
@@ -27,14 +31,14 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
 
 
 
-
-
-
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        Log.d("Home", "onCreate: CREATED HOME");
+
+
 
 
         main = main.getInstance(this);
@@ -48,21 +52,18 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
         b_My_Assets = findViewById(R.id.b_my_assets);
         b_Home = findViewById(R.id.b_home);
 
-
-
         b_Market.setOnClickListener(this);
         b_My_Assets.setOnClickListener(this);
         b_Home.setOnClickListener(this);
+
+        moneyAtual = main.getMoneyAtual();
+        moneys = main.getMoneys();
+
+        //TODO moneys + moneyAtual plot
+        Log.d("Money", "Money Atual: "+moneyAtual);
+        Log.d("Money", "Moneys: "+moneys.toString());
+
     }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -83,6 +84,16 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
                 break;
             case R.id.b_update:
                 main.connect();
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                startActivity(new Intent(Home.this,Home.class));
+                overridePendingTransition(0,0);
+
+                break;
+
         }
     }
 }

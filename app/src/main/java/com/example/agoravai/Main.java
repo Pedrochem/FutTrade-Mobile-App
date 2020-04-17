@@ -20,9 +20,13 @@ import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.StringTokenizer;
+
 
 public class Main {
 
@@ -34,8 +38,6 @@ public class Main {
 
     Context context;
 
-
-
     Time liverpool;
     Time manchesterCity;
     Time leicester;
@@ -45,7 +47,7 @@ public class Main {
     Time arsenal;
     Time newcastle;
 
-    Tabela tabela;
+
     List<Match> matches;
     Time[] times;
 
@@ -53,6 +55,9 @@ public class Main {
     boolean keeper = true;
 
     Set<String> wallet;
+    LinkedList<Integer> moneys;
+    int moneyAtual;
+
 
     public static Main getInstance(Context c){
         if (instance == null)
@@ -64,36 +69,47 @@ public class Main {
     }
 
     public Main(Context c){
+
         context = c;
         sharedPreferences = context.getSharedPreferences(MESSAGE_ID,context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
 
-        liverpool = new Time("Liverpool", 80, 1, 82);
-        manchesterCity = new Time("Manchester City", 70, 2,57);
-        leicester = new Time("Leicester City", 60, 3,53);
-        chelsea = new Time("Chelsea", 50, 4, 48);
-        manchesterUntd = new Time("Manchester United", 40, 5, 45);
-        tottenham = new Time("Tottenham Hotspur", 30, 6, 41);
-        arsenal = new Time("Arsenal", 20, 7, 40);
-        newcastle = new Time("Newcastle United", 10, 8,35 );
+        if (keeper){
+            editor.clear();
+            editor.commit();
+            keeper = false;
+        }
+
+
+        liverpool = new Time("Liverpool", 80, 1, 82,context);
+        manchesterCity = new Time("Manchester City", 70, 2,57,context);
+        leicester = new Time("Leicester City", 60, 3,53,context);
+        chelsea = new Time("Chelsea", 50, 4, 48,context);
+        manchesterUntd = new Time("Manchester United", 40, 5, 45,context);
+        tottenham = new Time("Tottenham Hotspur", 30, 6, 41,context);
+        arsenal = new Time("Arsenal", 20, 7, 40,context);
+        newcastle = new Time("Newcastle United", 10, 8,35,context );
 
         times = new Time[]{liverpool,manchesterCity,leicester,chelsea,manchesterUntd,tottenham,arsenal,newcastle};
 
-//        if (keeper){
-//            editor.clear();
-//            editor.commit();
-//            keeper = false;
-//        }
-
         wallet = sharedPreferences.getStringSet("Wallet",new HashSet<String>());
+
         money = sharedPreferences.getInt("Money",100);
         lastMatchId = sharedPreferences.getInt("LastMatchId",0);
+        moneys = getMoneys();
+        moneyAtual = getMoneyAtual();
 
-        tabela = new Tabela(times);
-
-
-
+    }
+    public int getMoneyAtual(){
+        int m= money;
+        for (String t : wallet){
+            for (int i=0;i<times.length;i++){
+                if (times[i].getName().equals(t))
+                    m+=times[i].getValue();
+            }
+        }
+        return m;
     }
 
     public void connect() {
@@ -101,9 +117,14 @@ public class Main {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void buy(Time t, Market m){
+    public void buy(String name, Market m) {
+        Time t=null;
+        for (int i = 0; i < times.length; i++) {
+            if (times[i].getName().equals(name))
+                t = times[i];
+        }
 
-        if(money-t.getValue()<0 || wallet.contains(t)) // revisar esse wallet ai
+        if(money-t.getValue()<0 || wallet.contains(t.getName())) // revisar esse wallet ai
             return; //ERRO
 
         wallet.add(t.getName());
@@ -117,20 +138,21 @@ public class Main {
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void sell(Time t, MyAssets my){
-        for (String time : wallet){
-             if (time.equals(t.getName())){
-                 wallet.remove(t.getName());
-                 money+=t.getValue();
-                 my.updateMoney(money);
-                 uptadeSharedPreferences();
-                 my.configButtons();
-                 return;
-             }
+    public void sell(String name, MyAssets my){
+        Time t=null;
+        for (int i = 0; i < times.length; i++) {
+            if (times[i].getName().equals(name))
+                t = times[i];
         }
-
+         if (wallet.contains(name)){
+             wallet.remove(name);
+             money+=t.getValue();
+             my.updateMoney(money);
+             uptadeSharedPreferences();
+             my.configButtons();
+             return;
+         }
     }
-
 
 
 
@@ -138,12 +160,40 @@ public class Main {
         editor.putInt("Money",money);
         editor.putStringSet("Wallet",wallet);
         editor.putInt("LastMatchId",lastMatchId);
+        editor.putString("Moneys",convertMoneysString());
+
 
         Log.d("Wallet", "Wallet: "+wallet.toString());
 
         editor.commit();
     }
 
+    public String convertMoneysString() {
+        StringBuilder str = new StringBuilder();
+        for (int i = 0; i < moneys.size(); i++) {
+            str.append(moneys.get(i)).append(",");
+        }
+        return str.toString();
+    }
+    public LinkedList<Integer> getMoneys(){
+        String savedString = sharedPreferences.getString("Moneys", "");
+        StringTokenizer st = new StringTokenizer(savedString, ",");
+        moneys = new LinkedList<>();
+        while (st.hasMoreTokens()){
+            moneys.add(Integer.parseInt(st.nextToken()));
+        }
+        return moneys;
+    }
+
+
+
+    public void updatePos(){
+        Arrays.sort(times);
+        for (int i=0;i<times.length;i++){
+            Log.d("Times", i+": "+times[i].getName()+" | Pts: "+times[i].getPoints());
+            times[i].save();
+        }
+    }
 
 
     public class doit extends AsyncTask<Void,Void,Void>{
@@ -165,10 +215,16 @@ public class Main {
 
                 if (matches.get(0).getMatchId() != lastMatchId){
                     Log.d("Matches", "We need to update!");
-                    lastMatchId = matches.get(0).getMatchId();
+                    Log.d("Matches", "Antigo: "+lastMatchId+ " | Atual: "+matches.get(0).getMatchId() );
 
+                    moneys.add(getMoneyAtual());
+                    lastMatchId = matches.get(0).getMatchId();
+                    uptadeSharedPreferences();
                     for (Match m:matches)
                         m.process();
+                    updatePos();
+
+
                 }
                 else {
                     Log.d("Matches", "We didn't need to update!");
