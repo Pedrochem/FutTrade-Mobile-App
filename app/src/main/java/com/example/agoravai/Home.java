@@ -28,6 +28,7 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
 
     private LinkedList<Integer> moneys;
     private int moneyAtual;
+    private int moneyTotal;
     private LineChart lineChart;
 
     private Button b_Market;
@@ -35,6 +36,7 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
     private Button b_Home;
 
     private TextView txtMoney;
+    private TextView txtMoneyTotal;
 
 
     private Main main;
@@ -65,7 +67,12 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
         b_Home.setOnClickListener(this);
 
         moneyAtual = main.getMoneyAtual();
+
+        txtMoneyTotal = findViewById(R.id.txt_MoneyTotal);
+        txtMoneyTotal.setText(NumberFormat.getCurrencyInstance().format(moneyAtual));
+
         moneys = main.getMoneys();
+
         lineChart = findViewById(R.id.linechartHome);
         initializeGraph();
 
@@ -95,9 +102,17 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
         LineData data = new LineData(dataSets);
 
 
-        lineChart.getAxisLeft().setEnabled(true);
-        lineChart.getXAxis().setEnabled(false);
         lineChart.getAxisRight().setEnabled(false);
+        lineChart.getXAxis().setEnabled(true);
+
+        lineChart.getAxisLeft().setAxisMinimum(100);
+        lineChart.getXAxis().setAxisMinimum(0f);
+
+        lineChart.getDescription().setEnabled(false);
+        lineChart.setDrawBorders(true);
+
+
+
         lineChart.setData(data);
 
 

@@ -6,11 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.icu.text.NumberFormat;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -22,6 +25,15 @@ public class Market extends AppCompatActivity implements View.OnClickListener {
     private Button b_Home;
     private Button b_My_Assets;
     private TextView txtMoney;
+
+    private ImageView img0;
+    private ImageView img1;
+    private ImageView img2;
+    private ImageView img3;
+    private ImageView img4;
+    private ImageView img5;
+    private ImageView img6;
+    private ImageView img7;
 
     private TextView txt0;
     private TextView txt1;
@@ -53,6 +65,7 @@ public class Market extends AppCompatActivity implements View.OnClickListener {
     private Button[] buttons;
     private TextView[] txts;
     private TextView[] prices;
+    private ImageView[] imgs;
 
 
 
@@ -118,6 +131,15 @@ public class Market extends AppCompatActivity implements View.OnClickListener {
         b_Home = findViewById(R.id.b_home);
         b_My_Assets = findViewById(R.id.b_my_assets);
 
+        img0 = findViewById(R.id.ma_img0);
+        img1 = findViewById(R.id.ma_img1);
+        img2 = findViewById(R.id.ma_img2);
+        img3 = findViewById(R.id.ma_img3);
+        img4 = findViewById(R.id.ma_img4);
+        img5 = findViewById(R.id.ma_img5);
+        img6 = findViewById(R.id.ma_img6);
+        img7 = findViewById(R.id.ma_img7);
+
         txt0 = findViewById(R.id.txt_0);
         txt1 = findViewById(R.id.txt_1);
         txt2 = findViewById(R.id.txt_2);
@@ -148,12 +170,20 @@ public class Market extends AppCompatActivity implements View.OnClickListener {
         buttons = new Button[]{buy0, buy1, buy2, buy3, buy4, buy5, buy6, buy7};
         txts = new TextView[]{txt0,txt1,txt2,txt3,txt4,txt5,txt6,txt7};
         prices = new TextView[]{price0,price1,price2,price3,price4,price5,price6,price7};
+        imgs = new ImageView[]{img0,img1,img2,img3,img4,img5,img6,img7};
+        int dimensionInDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics());
+
 
         for(int i=0;i<buttons.length;i++) {
             txts[i].setText(main.times[i].getName());
             buttons[i].setTag(main.times[i].getName());
             prices[i].setText(nf.format(main.times[i].getValue()));
+            imgs[i].setImageDrawable(main.getImg(main.times[i]));
+            imgs[i].getLayoutParams().height = dimensionInDp;
+            imgs[i].getLayoutParams().width = dimensionInDp;
+            imgs[i].requestLayout();
         }
+
         txtMoney.setText(nf.format(main.money));
     }
 

@@ -100,6 +100,6 @@ public class Time implements Comparable<Time> {
 
     @Override
     public int compareTo(Time o) {
-        return o.points - this.points;
+        return o.value - this.value;
     }
 }

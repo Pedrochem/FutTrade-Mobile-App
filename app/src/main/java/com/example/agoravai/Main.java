@@ -1,20 +1,18 @@
 package com.example.agoravai;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.util.Log;
 
+import androidx.annotation.LongDef;
 import androidx.annotation.RequiresApi;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.jsoup.Jsoup;
 
 import org.jsoup.nodes.Document;
@@ -195,6 +193,34 @@ public class Main {
         for (int i=0;i<times.length;i++){
             Log.d("Times", i+": "+times[i].getName()+" | Pts: "+times[i].getPoints());
             times[i].save();
+        }
+
+    }
+
+
+    public Drawable getImg(Time t){
+        switch (t.getName()){
+            case "Liverpool":
+                return context.getDrawable(R.drawable.liverpool);
+            case "Manchester City":
+                return context.getDrawable(R.drawable.manchester_city);
+            case "Leicester City":
+                return context.getDrawable(R.drawable.leicester_city);
+            case "Chelsea":
+                return context.getDrawable(R.drawable.manchester_united);
+            case "Manchester United":
+                return context.getDrawable(R.drawable.chelsea);
+            case "Tottenham Hotspur":
+                return context.getDrawable(R.drawable.tottenham_hotspur);
+            case "Arsenal":
+                return context.getDrawable(R.drawable.arsenal);
+            case "Newcastle United":
+                return context.getDrawable(R.drawable.newcastle);
+            default:
+                return null;
+
+
+
         }
     }
 
