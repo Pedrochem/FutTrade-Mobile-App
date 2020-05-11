@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".Market">
 
 
@@ -588,7 +589,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:layout_marginEnd="88dp"
+        android:fontFamily="@font/acme"
         android:text="Money:"
+        android:textColor="#6FD480"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -600,55 +603,51 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="28dp"
         android:text="100,00"
+        android:textColor="#464A43"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/txt_Money"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/b_home"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Home"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/b_market"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Market"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/b_my_assets"
-        app:layout_constraintStart_toEndOf="@+id/b_home" />
-
-    <Button
-        android:id="@+id/b_my_assets"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="My Assets"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
     <View
         android:id="@+id/v_Line"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray"
-        app:layout_constraintBottom_toTopOf="@+id/b_market"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <SearchView
-        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
-        app:layout_constraintEnd_toStartOf="@+id/txt_Money"
+        android:background="#D0E8D1"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/b_market" />
+
+    <ImageButton
+        android:id="@+id/b_home"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="40dp"
+        android:backgroundTint="#00FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/v_Line"
+        app:srcCompat="@drawable/ic_home_green_50dp" />
+
+    <ImageButton
+        android:id="@+id/b_market"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:backgroundTint="#00FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/b_my_assets"
+        app:layout_constraintStart_toEndOf="@+id/b_home"
+        app:srcCompat="@drawable/ic_local_grocery_store_black_24dp" />
+
+    <ImageButton
+        android:id="@+id/b_my_assets"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="40dp"
+        android:backgroundTint="#00FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_trending_up_black_24dp" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

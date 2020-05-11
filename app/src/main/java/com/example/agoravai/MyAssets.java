@@ -10,17 +10,20 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MyAssets extends AppCompatActivity implements View.OnClickListener {
     private Main main;
     private NumberFormat nf;
 
-    private Button b_Market;
-    private Button b_Home;
+    private ImageButton b_Market;
+    private ImageButton b_Home;
     private TextView txtMoney;
 
     private ImageView img0;
@@ -31,6 +34,15 @@ public class MyAssets extends AppCompatActivity implements View.OnClickListener 
     private ImageView img5;
     private ImageView img6;
     private ImageView img7;
+
+    private TextView up0;
+    private TextView up1;
+    private TextView up2;
+    private TextView up3;
+    private TextView up4;
+    private TextView up5;
+    private TextView up6;
+    private TextView up7;
 
     private TextView txt0;
     private TextView txt1;
@@ -59,10 +71,17 @@ public class MyAssets extends AppCompatActivity implements View.OnClickListener 
     private Button sell6;
     private Button sell7;
 
+    private boolean canBuySell;
+    private Toast toast;
+
+    private Intent intentMarket;
+    private Intent intentHome;
+
     private Button[] buttons;
     private TextView[] txts;
     private TextView[] prices;
     private ImageView[] imgs;
+    private TextView[] ups;
 
 
 
@@ -77,6 +96,11 @@ public class MyAssets extends AppCompatActivity implements View.OnClickListener 
         findIds();
         configButtons();
 
+        canBuySell = getIntent().getExtras().getBoolean("canBuySell");
+
+        intentHome = new Intent(this,Home.class);
+        intentMarket = new Intent(this,Market.class);
+        intentMarket.putExtra("canBuySell",canBuySell);
 
         b_Market.setOnClickListener(this);
         b_Home.setOnClickListener(this);
@@ -90,15 +114,21 @@ public class MyAssets extends AppCompatActivity implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.b_market:
-                startActivity(new Intent(MyAssets.this,Market.class));
+                startActivity(intentMarket);
                 overridePendingTransition(0,0);
                 break;
             case R.id.b_home:
-                startActivity(new Intent(MyAssets.this,Home.class));
+                startActivity(intentHome);
                 overridePendingTransition(0,0);
                 break;
             default:
-                main.sell(v.getTag().toString(),this);
+                if (canBuySell)
+                    main.sell(v.getTag().toString(),this);
+                else{
+                    toast = Toast.makeText(this,"You can't sell, market is closed!", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER,0,0);
+                    toast.show();
+                }
                 break;
         }
     }
@@ -110,6 +140,14 @@ public class MyAssets extends AppCompatActivity implements View.OnClickListener 
         b_Home = findViewById(R.id.b_home);
         b_Market = findViewById(R.id.b_market);
 
+        up0 = findViewById(R.id.up_0);
+        up1 = findViewById(R.id.up_1);
+        up2 = findViewById(R.id.up_2);
+        up3 = findViewById(R.id.up_3);
+        up4 = findViewById(R.id.up_4);
+        up5 = findViewById(R.id.up_5);
+        up6 = findViewById(R.id.up_6);
+        up7 = findViewById(R.id.up_7);
 
         img0 = findViewById(R.id.img0);
         img1 = findViewById(R.id.img1);
@@ -151,6 +189,8 @@ public class MyAssets extends AppCompatActivity implements View.OnClickListener 
         txts = new TextView[]{txt0,txt1,txt2,txt3,txt4,txt5,txt6,txt7};
         prices = new TextView[]{price0,price1,price2,price3,price4,price5,price6,price7};
         imgs = new ImageView[]{img0,img1,img2,img3,img4,img5,img6,img7};
+        ups = new TextView[]{up0,up1,up2,up3,up4,up5,up6,up7};
+
         int dimensionInDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics());
 
         for(int i=0;i<buttons.length;i++) {
@@ -161,10 +201,33 @@ public class MyAssets extends AppCompatActivity implements View.OnClickListener 
             imgs[i].getLayoutParams().height = dimensionInDp;
             imgs[i].getLayoutParams().width = dimensionInDp;
             imgs[i].requestLayout();
+            setUp(ups[i],main.times[i].getValue(),main.times[i].getLastValue());
         }
         txtMoney.setText(nf.format(main.money));
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void setUp(TextView up, int value, int lastValue) {
+        if (value-lastValue>0){
+            up.setText("Up "+NumberFormat.getCurrencyInstance().format(value-lastValue));
+            up.setTextColor(Color.GREEN);
+        }
+
+        else if(value-lastValue<0){
+            up.setText("Down "+NumberFormat.getCurrencyInstance().format(value-lastValue));
+            up.setTextColor(Color.RED);
+        }
+
+        else{
+            up.setText("Up/Down"+NumberFormat.getCurrencyInstance().format(value-lastValue));
+            up.setTextColor(Color.GRAY);
+        }
+
+        if (lastValue==-1){
+            up.setText("");
+        }
+
+    }
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -178,9 +241,13 @@ public class MyAssets extends AppCompatActivity implements View.OnClickListener 
         for (int i = 0; i < buttons.length; i++) {
 
             if (!main.wallet.contains(buttons[i].getTag())){
-                buttons[i].setBackgroundColor(Color.DKGRAY);
+                buttons[i].setBackgroundColor(Color.parseColor("#8F8F8F"));
                 buttons[i].setEnabled(false);
+                buttons[i].setTextColor(Color.parseColor("#3C3939"));
             }
+            else
+                buttons[i].setBackgroundColor(Color.parseColor("#4CAF50"));
+
         }
     }
 

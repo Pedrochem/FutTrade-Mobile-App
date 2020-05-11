@@ -18,6 +18,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -72,13 +73,13 @@ public class Main {
         context = c;
         sharedPreferences = context.getSharedPreferences(MESSAGE_ID,context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
-
-
-        if (keeper){
-            editor.clear();
-            editor.commit();
-            keeper = false;
-        }
+//
+//
+//        if (keeper){
+//            editor.clear();
+//            editor.commit();
+//            keeper = false;
+//        }
 
 
         liverpool = new Time("Liverpool", 80, 1, 82,context);
@@ -91,6 +92,7 @@ public class Main {
         newcastle = new Time("Newcastle United", 10, 8,35,context );
 
         times = new Time[]{liverpool,manchesterCity,leicester,chelsea,manchesterUntd,tottenham,arsenal,newcastle};
+        Arrays.sort(times);
 
         wallet = sharedPreferences.getStringSet("Wallet",new HashSet<String>());
 
@@ -207,9 +209,9 @@ public class Main {
             case "Leicester City":
                 return context.getDrawable(R.drawable.leicester_city);
             case "Chelsea":
-                return context.getDrawable(R.drawable.manchester_united);
-            case "Manchester United":
                 return context.getDrawable(R.drawable.chelsea);
+            case "Manchester United":
+                return context.getDrawable(R.drawable.manchester_united);
             case "Tottenham Hotspur":
                 return context.getDrawable(R.drawable.tottenham_hotspur);
             case "Arsenal":
@@ -236,6 +238,11 @@ public class Main {
             try {
                 Document doc1 = Jsoup.connect("http://dontpad.com/ordepncl/mobile").get();
                 json1 = doc1.body().text() ;
+
+
+                if (json1.length()==40)
+                    return null;
+
                 json1 = json1.trim().substring(41);
 
                 Log.d("Jsoup", "DeuBom:"+json1);

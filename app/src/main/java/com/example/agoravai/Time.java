@@ -7,6 +7,7 @@ import android.util.Log;
 public class Time implements Comparable<Time> {
     private String name;
     private int value;
+    private int lastValue;
     private int pos;
     private int points;
     private SharedPreferences sharedPreferences;
@@ -17,14 +18,17 @@ public class Time implements Comparable<Time> {
         editor = sharedPreferences.edit();
         this.name = name;
         this.value = sharedPreferences.getInt(name+"value",value);
+        lastValue = sharedPreferences.getInt(name+"lastValue",-1);
         this.pos = pos;
         this.points = sharedPreferences.getInt(name+"points",points);
+
 
     }
 
     public void save(){
         editor.putInt(name+"points",points);
         editor.putInt(name+"value",value);
+        editor.putInt(name+"lastValue",lastValue);
         editor.commit();
     }
 
@@ -41,6 +45,8 @@ public class Time implements Comparable<Time> {
     public int getValue() {
         return value;
     }
+
+    public int getLastValue(){ return lastValue; }
 
     public void setValue(int value) {
         this.value = value;
@@ -62,6 +68,8 @@ public class Time implements Comparable<Time> {
     public void uptadeVitoria(int posT1, int posT2) {
         Log.d("Matches", "PosT1: "+posT1+" | PosT2: "+posT2);
         Log.d("Matches", "uptadeVitoria: "+name+ "| Antigo value: "+value);
+        lastValue = value;
+
         if (posT1>posT2)
             value+=(((posT1-posT2)+3)/10.0)*value;
         else
@@ -69,14 +77,15 @@ public class Time implements Comparable<Time> {
         points+=3;
 
         Log.d("Matches", "uptadeVitoria: "+name+"| Value: "+value);
+        Log.d("Last value", name+"Last Value: "+lastValue);
     }
 
 
 
     public void uptadeDerrota(int posT1, int posT2) {
-
         Log.d("Matches", "PosT1: "+posT1+" | PosT2: "+posT2);
         Log.d("Matches", "updateDerrota: "+name+ "| Antigo value: "+value);
+        lastValue = value;
 
         if (posT2>posT1)
             value-=(((posT2-posT1)+3)/10.0)*value;
@@ -85,17 +94,21 @@ public class Time implements Comparable<Time> {
         points-=3;
 
         Log.d("Matches", "uptadeDerrota: "+name+"| Value: "+value);
+        Log.d("Last value", name+"Last Value: "+lastValue);
     }
 
     public void uptadeEmpate(int posT1, int posT2) {
         Log.d("Matches", "uptadeEmpate: "+name);
         Log.d("Matches", "updateEmpate: "+name+ "| Antigo value: "+value);
+        lastValue = value;
+
         if(posT1>posT2)
             value+=0.1*value;
         else
             value-=0.1*value;
         points+=1;
         Log.d("Matches", "uptadeEmpate: "+name+"| Value: "+value);
+        Log.d("Last value", name+"Last Value: "+lastValue);
     }
 
     @Override

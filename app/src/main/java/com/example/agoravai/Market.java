@@ -11,21 +11,28 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import android.widget.Toast;
 
 
 public class Market extends AppCompatActivity implements View.OnClickListener {
     private Main main;
     private NumberFormat nf;
 
-    private Button b_Home;
-    private Button b_My_Assets;
-    private TextView txtMoney;
+    private Intent intentMyAssets;
+    private Intent intentHome;
 
+    private ImageButton b_Home;
+    private ImageButton b_My_Assets;
+
+    private TextView txtMoney;
+    private boolean canBuySell;
+    private Toast toast;
     private ImageView img0;
     private ImageView img1;
     private ImageView img2;
@@ -69,6 +76,7 @@ public class Market extends AppCompatActivity implements View.OnClickListener {
 
 
 
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +84,13 @@ public class Market extends AppCompatActivity implements View.OnClickListener {
         setContentView(R.layout.activity_market);
         main = Main.getInstance(this);
         nf = NumberFormat.getCurrencyInstance();
+
+        canBuySell = getIntent().getExtras().getBoolean("canBuySell");
+
+        intentHome = new Intent(this,Home.class);
+        intentMyAssets = new Intent(this,MyAssets.class);
+        intentMyAssets.putExtra("canBuySell",canBuySell);
+
 
         findIds();
         configButtons();
@@ -94,8 +109,8 @@ public class Market extends AppCompatActivity implements View.OnClickListener {
     public void configButtons() {
 
         for (int i = 0; i < buttons.length; i++) {
-            if (main.wallet.contains(buttons[i].getTag())){
-                buttons[i].setBackgroundColor(Color.RED);
+            if (main.wallet.contains(buttons[i].getTag())||main.times[i].getValue()>main.money){
+                buttons[i].setBackgroundColor(Color.parseColor("#8F8F8F"));
                 buttons[i].setEnabled(false);
                 buttons[i].setTextColor(Color.parseColor("#3C3939"));
             }
@@ -108,16 +123,22 @@ public class Market extends AppCompatActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.b_home:
-                startActivity(new Intent(Market.this,Home.class));
+                startActivity(intentHome);
                 overridePendingTransition(0,0);
                 break;
             case R.id.b_my_assets:
-                startActivity(new Intent(Market.this,MyAssets.class));
+                startActivity(intentMyAssets);
                 overridePendingTransition(0,0);
                 break;
 
             default:
-                main.buy(v.getTag().toString(),this);
+                if (canBuySell)
+                    main.buy(v.getTag().toString(),this);
+                else{
+                    toast = Toast.makeText(this,"You can't buy, market is closed!", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER,0,0);
+                    toast.show();
+                }
                 break;
 
         }
