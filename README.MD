@@ -1,6 +1,6 @@
 # FutTrade - Mobile App
 
-FutTrade is a mobile game app with
+FutTrade is a android game with
 the purpose of teaching the basic
 concepts of the stock exchange
 market through football.
@@ -12,3 +12,5 @@ are considered the majority
 audience
 
 Follow the guide in the file "Storyboard.pdf" and learn how to use it!
+
+The project was developed in Java using Android Studio.
